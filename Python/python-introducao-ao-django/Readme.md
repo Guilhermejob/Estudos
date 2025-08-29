@@ -1,67 +1,242 @@
 ## 1. Por que escolher Django
 
-primeiro e um framework que já trabalhei antes, quero me aprofundar nele e relembrar algumas coisas, segundo que ele é amplamente usado no mercado de trabalho por sua facilidade de ter varias coisas já nativamente nele, então em resumo, se economiza tempo e linhas de código, e um framework orientado a conteudo, operações de CRUD são facilitadas usando essa ferramenta, possui ORM nativo, a interface dele de ADM é fantastica, com muitas opções ja prontas e outras faceis de implementar, usa a arquitetura MVT(model, view, template), e por ultimo mas não menos importante, e um framework muito seguro, para tratar de segurança com o Django é relativamente mais facil que com outros frameworks, então vamos la!
+Django é um framework que já utilizei antes e quero me aprofundar e relembrar alguns conceitos. Ele é amplamente usado no mercado de trabalho por sua facilidade e por trazer diversas funcionalidades nativas, economizando tempo e linhas de código. É um framework orientado a conteúdo, facilita operações de CRUD, possui ORM nativo, uma interface administrativa excelente e fácil de customizar, utiliza a arquitetura MVT (Model, View, Template) e, por fim, é muito seguro. Tratar segurança com Django é mais simples do que em outros frameworks.
 
-para começarmos o projeto iremos instalar de cara o virtualenv e o django, LEMBRE-SE: o django só vai ser instalado após estivermos dentro do ambiente virtual, e nao na sua maquina
+Vamos começar!
 
-### 2. Começando nosso projeto no Django
+---
 
-o django nos da uma facilidade incrivel, com 1 comando ele nos entrega toda a estrutura de configurações que precisamos para iniciarmos nosso projeto e esse comando é
+## 2. Começando o projeto Django
 
-```terminal
+Para iniciar o projeto, instale o `virtualenv` e o Django. **Lembre-se:** instale o Django apenas dentro do ambiente virtual, não diretamente na sua máquina.
+
+```bash
 django-admin startproject setup .
 ```
 
-é muito comum nós vermos repositorios onde a palavra setup vira o nome do projeto, porem, se analisarmos bem, dentro dessa pasta estão todas as configs do nosso projeto, então e considerado uma boa pratica dar o nome do projeto de setup, o ponto no final do comando serve para não deixar o django criar uma subpasta com o mesmo nome com os arquivos de configs dentro
+É comum ver projetos com o nome `setup`, pois essa pasta contém todas as configurações do projeto. O ponto final evita que o Django crie uma subpasta com o mesmo nome.
 
-### 3. Rodando servidor
+---
 
-Após isso, podemos ja ver na tela oque nós estamos fazendo com o seguinte comando
+## 3. Rodando o servidor
 
-```terminal
+Para visualizar o projeto rodando, execute:
+
+```bash
 python manage.py runserver
 ```
 
-esse é um dos arquivos e um dos comandos que podemos executar quando criamos nosso projeto usando o ultimo comando, após usarmos esse comando uma mensagem aparece no terminar e um endereço e nos passado, geralmente algo como http://127.0.0.1:8000 aqui podemos clicar nele segurando CRTL e acessar a pagina do projeto que esta rodando em um servidor local
+Após esse comando, aparecerá um endereço como http://127.0.0.1:8000. Segure `CTRL` e clique para acessar o projeto rodando localmente.
 
-### 4. Variaveis de ambiente e sua importancia 
+---
 
-o que são variaveis de ambiente, bom o proprio nome já diz, são variaveis que iram rodar somente no seu ambiente e nada mais, geralmente são chaves de incriptação, chaves de acesso, senhas ou qualquer dado sensivel que não possa ser visto por todo mundo, essas variaveis nos adiacionamos em um arquivo chamado de .env e para ler ele no python/Django precisamos de uma lib para facilitar nossa vida, então vamos para a instalação
+## 4. Variáveis de ambiente e sua importância
 
-`No seu ambiente virtual digite no terminal o seguinte comando`
+Variáveis de ambiente são usadas para armazenar dados sensíveis, como chaves de acesso e senhas, que não devem ser expostos. Elas ficam em um arquivo chamado `.env`. Para ler esse arquivo no Django, instale a biblioteca:
 
-```terminal
+```bash
 pip install python-dotenv
 ```
 
-Após instalarmos o pacote dentro do nosso projeto no arquivo setup/settings.py vamos precisar fazer algumas modificações para isso funcionar, primeiro os imports
+No arquivo `setup/settings.py`, adicione:
 
 ```python
-#setup/settings.py
-
 from pathlib import Path
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
 ```
 
-precisaremosm importar a lib os direto do python e tambem o dotenv, após fazermos isso teremos que carregar o dotenv chamando a função load_dotevn()
+Remova a `SECRET_KEY` do `settings.py` e coloque no `.env`:
 
-após isso teremos que remover a nossa SECRET_KEY do arquivo settings.py e por em um arquivo .env atribuindo a uma variavel como no exemplo a seguir
-
-```python
-#arquivo .env
-SECRET_KEY = sua SECRET_KEY
+```env
+SECRET_KEY=sua_SECRET_KEY
 ```
 
-para carregar esse secret key la no arquivo settings.py usaremos o seguinte codigo
+Para carregar a chave no `settings.py`:
 
 ```python
-#arquivo setup/settings.py
-
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 ```
 
-certo, mas mesmo fazendo isso tudo ainda assim o arquivo .env vai ser enviado para nosso github e nossa chave vai ficar exposta, caaaalma meu jovem gafanhoto, é agora que entra magia de tudo, temos um tipo de arquivo chamado .gitignore, esse arquivo e responsavel por mapear todos os arquivos ou pastas que não queremos adicionar a nossa arvore git, ou seja, tudo que tiver descrito neste arquivo o git não irá rastrear e como consequencia não ira adicionar em seus repositorios, e para facilitar ainda mais a nossa vida, tem um site chamado gitignore.io que você bota a linguagem, sistema ou framework que você esta trabalhando e ele gera um gitignore dedicado para oque você esta trabalhando, como nós estamos trabalhando com python/django, só pesquisar django la e colar no seu gitignore oque ele retornar e pronto
+**Importante:** Para evitar que o `.env` seja enviado ao GitHub, adicione-o ao `.gitignore`. Use o site [gitignore.io](https://www.toptal.com/developers/gitignore) para gerar um arquivo adequado para Python/Django.
+
+> **Atenção:** O nome do arquivo `.gitignore` deve estar correto. Qualquer erro impede que o Git ignore os arquivos desejados.
+
+---
+
+## 5. Django Apps
+
+No Django, cada nova funcionalidade é criada como um "app". Por exemplo, para adicionar clientes:
+
+```bash
+python manage.py startapp clientes
+```
+
+Isso cria uma pasta `clientes/` para toda a lógica desse app.
+
+Estrutura típica do projeto:
+
+```
+📂 clientes/
+📂 setup/
+📂 venv/
+📄 .env
+📄 .gitignore
+📄 db.sqlite3
+📄 manage.py
+📄 Readme.md
+📄 requirements.txt
+```
+
+Para registrar o app, adicione-o em `INSTALLED_APPS` no `setup/settings.py`:
+
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'clientes',
+]
+```
+
+---
+
+## 6. Models e Views
+
+### Views
+
+Views exibem informações do app. Exemplo de view simples:
+
+```python
+# clientes/views.py
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse('<h1>Título</h1>')
+```
+
+No arquivo de URLs principal:
+
+```python
+# setup/urls.py
+from django.contrib import admin
+from django.urls import path
+from clientes.views import index
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', index),
+]
+```
+
+---
+
+## 7. Isolando URLs dos Apps
+
+Para projetos com muitos apps, isole as URLs de cada app em um arquivo próprio. Exemplo:
+
+```python
+# clientes/urls.py
+from django.urls import path
+from .views import index
+
+urlpatterns = [
+    path('', index),
+]
+```
+
+No arquivo principal de URLs:
+
+```python
+# setup/urls.py
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('clientes.urls')),
+]
+```
+
+---
+
+## 8. Models
+
+Models são classes Python que representam tabelas do banco de dados. Exemplo:
+
+```python
+from django.db import models
+
+class Cliente(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    data_cadastro = models.DateTimeField(auto_now_add=True)
+    ativo = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.nome
+```
+
+---
+
+## 9. Migrations
+
+Migrations criam e alteram tabelas no banco de dados conforme os models definidos.
+
+- **Criar migration:**
+  ```bash
+  python manage.py makemigrations
+  ```
+- **Aplicar migration:**
+  ```bash
+  python manage.py migrate
+  ```
+- **Ver status das migrations:**
+  ```bash
+  python manage.py showmigrations
+  ```
+
+---
+
+## 10. ORM
+
+O ORM (Object-Relational Mapping) permite interagir com o banco de dados usando objetos Python, sem precisar escrever SQL diretamente. Cada model representa uma tabela, cada atributo representa uma coluna e cada instância representa uma linha.
+
+---
+
+## 11. Django Admin
+
+O Django Admin é uma interface administrativa pronta para gerenciar os dados da aplicação. Após definir os models e aplicar as migrations, acesse `/admin` para visualizar e manipular os dados.
+
+Para acessar o admin, crie um superusuário:
+
+```bash
+python manage.py createsuperuser
+```
+
+Preencha os dados solicitados e, depois, rode o servidor:
+
+```bash
+python manage.py runserver
+```
+
+Acesse: [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) usando o usuário e senha cadastrados.
+
+---
+
+## Referências
+
+- [Documentação oficial do Django (pt-br)](https://docs.djangoproject.com/pt-br/)
+- [Guia de boas práticas com Django](https://www.djangoproject.com/)
+- [gitignore.io](https://www.toptal.com/developers/gitignore)
+
+---
+
+## Resumo
+
+Este projeto apresenta os fundamentos básicos do Django, incluindo criação de projetos, apps, views, models, migrations, uso de variáveis de ambiente, ORM e Django Admin. Para se aprofundar, consulte a documentação oficial e pratique criando novos apps e funcionalidades!
