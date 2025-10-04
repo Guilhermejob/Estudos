@@ -13,7 +13,7 @@ class EstudanteAdmin(admin.ModelAdmin):
     # filtros disponiveis no django admin
     list_filter = ('data_nascimento',)
     # ordenação do django admin
-    ordering = ('id',)
+    ordering = ('id', 'nome',)
     
 admin.site.register(Estudante, EstudanteAdmin)
 
