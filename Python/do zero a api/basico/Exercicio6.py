@@ -1,0 +1,6 @@
+tupla1 = ('valor_1', 2, 3.1, 'Kenzie Academy', ['elemento1', 'elemento2'], 'Kenzie Academy')
+print(tupla1)
+print(tupla1[-1])
+print(len(tupla1))
+print(tupla1.count('Kenzie Academy'))
+print(tupla1.index(3.1))
