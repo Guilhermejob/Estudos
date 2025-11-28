@@ -1,3 +1,5 @@
+from collections import Counter
+
 products = [
     {
         "_id": 25,
@@ -408,7 +410,3 @@ products = [
         "type": "bakery",
     },
 ]
-
-ordenado = sorted(products, key=lambda x: x["_id"])
-
-print(ordenado[-1]['_id'] +1 )
