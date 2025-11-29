@@ -17,9 +17,9 @@
 
 #para criar um conjunto usamos a palavra set em seguida uma lista de elementos entre chaves, ou usar a declaração literal usando ({})
 
-meu_conjunto = set([1, 2, 3, 4, 5, 5, 5, 4])
+# meu_conjunto = set([1, 2, 3, 4, 5, 5, 5, 4])
 
-print(meu_conjunto)
+# print(meu_conjunto)
 
 """
 principais metodos de conjuntos
@@ -35,3 +35,40 @@ set.difference(conjunto): Retorna um novo conjunto com os elementos que estao pr
 set.union(conjunto): Retorna um novo conjunto com os elementos presentes em ambos os conjuntos
 set.isdisdjoint(conjunto): Retorna True se os conjuntos não tiverem elementos em comum, caso contrario retorna False
 """
+
+meu_conjunto = set ([1, 2, 3, 4, 5])
+
+
+meu_conjunto.add(6)
+print(meu_conjunto)
+
+meu_conjunto.remove(3)
+print(meu_conjunto)
+
+# meu_conjunto.discard(7) #não lança erro
+# meu_conjunto.remove(7) #lança erro
+
+outro_conjunto = meu_conjunto.copy()
+print(outro_conjunto)
+
+meu_conjunto.update([7, 8, 9])
+print(meu_conjunto)
+
+conjunto_a = set([1, 2, 3])
+conjunto_b = set ([2, 3, 4])
+
+#Cria um novo conjunto com os elementos em comum entre os conjuntos
+intersecao = conjunto_a.intersection(conjunto_b)
+print(intersecao)
+
+#Cria um novo conjunto com os elementos presentes no conjunto_a mas nao presentes em conjunto_b
+diferenca = conjunto_a.difference(conjunto_b)
+print(diferenca)
+
+#Cria um novo conjunto com todos os elementos presente em ambos os conjuntos
+uniao = conjunto_a.union(conjunto_b)
+print(uniao)
+
+#verifica se os conjuntos não tem elementos em comum
+sao_disjuntos = conjunto_a.isdisjoint(conjunto_b)
+print(sao_disjuntos)
