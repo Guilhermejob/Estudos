@@ -121,12 +121,39 @@ def exercicio_11(valor_hora, horas):
 
 import math
 
-def exercicio_12(metros):
+def apenas_18_L(metros):
     quantos_litros = (1*metros)/3
-    quantas_latas = math.ceil(quantos_litros/18)
-    return f'Você terá que gastar R$ {quantas_latas * 80} em tinta, comprando {quantas_latas} latas de tinta'
+    quantas_latas_18_L = math.ceil(quantos_litros/18)
+    total = quantas_latas_18_L * 80
+    return f'Comprando {quantas_latas_18_L} latas de 18L você gastará R${total}'
+    
+def apenas_3_L(metros):
+    quantos_litros = (1*metros)/3
+    quantas_latas_3_L = math.ceil(quantos_litros/3.6)
+    total = quantas_latas_3_L * 25
+    return f'Comprando apenas latas de 3.6L você gastará R${total}'
+    
+def ambas_as_latas(metros):
+    quantos_litros = (1*metros)/3 + (((1*metros)/3) * 0.10)
+    quantas_latas_18_L = math.floor(quantos_litros/18)
+    quantas_latas_3_L = math.ceil(quantos_litros/18 - quantas_latas_18_L)
+    total = (quantas_latas_18_L * 80) + (quantas_latas_3_L*25)
+    return f'mistrurando comprando {quantas_latas_18_L} de latas de 18L e {quantas_latas_3_L} de latas de 3,6L você gastará R${total}'
+    
+        
 
-print(exercicio_12(300))
+def exercicio_12(metros):
+    
+    print(apenas_18_L(metros))
+    print(apenas_3_L(metros))
+    print(ambas_as_latas(metros))
+    
+    
+    
+    #return f'Você terá que gastar R$ {quantas_latas * 80} em tinta, comprando {quantas_latas} latas de tinta'
+
+exercicio_12(225)
+
         
 
 
