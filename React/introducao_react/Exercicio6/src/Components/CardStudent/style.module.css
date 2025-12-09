@@ -1,0 +1,33 @@
+.card{
+    border: 1px solid;
+    width: 25%;
+    height: 8em;
+    background: blanchedalmond;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.header{
+    background: lightgray;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+
+.section{
+    padding-top: 12px;
+    width: 100%;
+}
+
+.section p{
+    border: 1px solid;
+    width: 100%;
+    padding-left: 12px;
+}
+
+footer p{
+    padding-left: 12px;
+}
