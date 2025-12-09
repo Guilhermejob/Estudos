@@ -1,0 +1,36 @@
+section {
+    display: flex;
+    justify-content: center;
+    padding: 90px 0;
+    background-color: #2A645C;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.titles {
+    padding-bottom: 50px;
+    color: white;
+}
+
+.titles h2 {
+    font-size: 40px;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+}
+
+.container figure img {
+    width: 50px;
+    padding-bottom: 10px;
+}
+
+
+.container_restaurantes {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 40px;
+}
