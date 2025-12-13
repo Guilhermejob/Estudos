@@ -1,40 +1,34 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from musicians.models import Musician
-from django.forms.models import model_to_dict
+from rest_framework.pagination import PageNumberPagination
+from .serializers import MusicianSerializer
 
 
-class MusicianView(APIView):
+class MusicianView(APIView, PageNumberPagination):
     
     
     def post(self, request):
-        #aqui iremos pegar o objeto request.data, que se trata do body da requisição
-        musician_data = request.data
+        #aqui iremos pegar o objeto request.data e serializar ele 
+        serializer = MusicianSerializer(data = request.data)
         
-        musician = Musician.objects.create(**musician_data)
+        #aqui iremos verificar se o serializer é valido se nao lança exceção
+        serializer.is_valid(raise_exception=True)
+        
+        
+        
+        musician = Musician.objects.create(**serializer.validated_data)
         #acima estamos usando o unpacking ou seja ele ira quebrar o body nos parametros que temos na model para que o registro seja feito em banco
-        """
-            Podemos fazer as atribuições manualmente tambem dessa forma
-            
-            musician = Musician.objects.create(
-                first_name  = musician_data['first_name'],
-                last_name = musician_data['last_name'],
-                instrument = musician_data['instrument'],
-            )
-            
-            o processo acima é o processo 'manual' porem usando o unpacking se torna menos verboso
-        """
+
+        serializer = MusicianSerializer(musician)
         
-        return Response(model_to_dict(musician), 201)
+        return Response(serializer.data, 201)
     
     def get(self, request):
         musicians = Musician.objects.all()
         
-        musicians_dicts = []
+        result_page = self.paginate_queryset(musicians, request, view=self)
         
-        
-        for musician in musicians:
-            m = model_to_dict(musician)
-            musicians_dicts.append(m)
+        serializer = MusicianSerializer(result_page, many=True)
             
-        return Response(musicians_dicts)
+        return self.get_paginated_response(serializer.data)
