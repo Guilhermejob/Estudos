@@ -62,3 +62,33 @@ class PetSerializer(serializers.Serializer):
         return pet
     
     
+    def update(self, instance, validated_data):
+        
+        
+        if 'group' in validated_data:
+            group_data = validated_data.pop('group')
+            name = group_data['scientific_name'].strip().lower()
+            group, _ = Group.objects.get_or_create(scientific_name=name)
+            instance.group = group
+        
+        
+        if 'traits' in validated_data:
+            traits_data = validated_data.pop('traits')
+            traits = []
+            
+            for item in traits_data:
+                trait, _ = Trait.objects.get_or_create(
+                    name = item['name'].strip().lower()
+                )
+                
+                traits.append(trait)
+                
+            instance.traits.set(traits)
+            
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
+        
+        instance.save()
+        return instance
+                
