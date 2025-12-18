@@ -75,6 +75,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bandkamp.wsgi.application'
 
 
+#configs dos tokens JWT
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'AUTH_TOKEN_CLASSES':('rest_framework_simplejwt.tokens.AccessToken',)
+}
+
+#fazendo isso nos declaramos globalmente as classes de autenticação, não necessitando implementar elas 
+#dentro das nossas views
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
