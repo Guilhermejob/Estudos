@@ -1,3 +1,5 @@
-from django.shortcuts import render
+from .serializers import CustomJWTSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
-# Create your views here.
+class LoginJWTView(TokenObtainPairView):
+    serializer_class = (CustomJWTSerializer)
