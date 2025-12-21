@@ -54,6 +54,20 @@ class UserSerializer(serializers.Serializer):
 
         return user
     
+    def update(self, instance : User, validated_data : dict):
+        
+        instance.email = validated_data.get('email', instance.email)
+        instance.username = validated_data.get('username', instance.username)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.birthdate = validated_data.get('birthdate', instance.birthdate)
+        instance.is_employee = validated_data.get('is_employee', instance.is_employee)
+        
+        instance.save()
+        
+        return instance
+        
+    
 class CustomJWTSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
