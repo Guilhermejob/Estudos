@@ -12,7 +12,7 @@ class MovieView(APIView):
     
     def post(self, request):
         
-        print(request.user)
+
         serializer = MovieSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
         
